@@ -1,3 +1,4 @@
+import os
 import csv
 import random
 
@@ -6,6 +7,9 @@ START_SPEED = 60.0
 
 FULL_SPEED = 120.0
 MAX_TIME = 160.0 #defines lentgh of file
+
+os.makedirs('./data', exist_ok=True)
+write_location = './data/sensor_out.csv' #folders have to exist
 
 class Data_generator:
     def __init__(self):
@@ -29,7 +33,7 @@ class Data_generator:
         else:
             return None
 
-with open('sensor_out.csv', 'w') as csvfile:
+with open(write_location , 'w') as csvfile:
     csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     generator = Data_generator()
 
