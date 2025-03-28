@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 import os
+import sys
 import csv
 import random
-
 
 START_FRAME = 100
 START_SPEED = 60.0
@@ -13,10 +14,11 @@ FRAME_NUM = 2000 #defines length of file
 FULL_SPEED = 120.0
 SIGNAL1_TRIGGER = 200
 
+CAM_WRITE_LOCATION = './data/f_cam_out.csv' #default write location
 os.makedirs('./data', exist_ok=True)
-write_location = './data/f_cam_out.csv' #folders have to exist
 
-class Data_generator:
+
+class Cam_data_generator:
     def __init__(self):
         self.timestamp = 100.0
         self.frameId = START_FRAME
@@ -34,25 +36,32 @@ class Data_generator:
             self.timestamp = round(self.timestamp + 0.0277 - 0.00005 + 0.0001*random.random(), 6)
             self.frameId += 1
             if (not self.fullSpeed):
-                self.speed = round(self.speed + 0.08, 2) #expecting precision of 2
+                self.speed = round(self.speed + 0.08, 3) #expecting precision of 3 decimals
                 if (self.speed >= FULL_SPEED):
                     self.fullSpeed = True
             else:
-                self.speed = round(FULL_SPEED - 0.05 + 0.1*random.random(), 2)
-            self.yawRate = round(-1.0 + 2.0*random.random(), 6) #expecting same precision?
+                self.speed = round(FULL_SPEED - 0.05 + 0.1*random.random(), 3)
+            self.yawRate = round(-1.0 + 2.0*random.random(), 3) #expecting precision of 3 decimals
             if (self.frameId == 201):
                 self.signal1 = random.randint(1, 15)
             if (self.signal1 >= 5):
-                self.signal2 = 70 + random.randint(0, 20) #integer I expect
+                self.signal2 = 70 + random.randint(0, 20) #expecting integer
             return ret
         else:
             return None
 
-with open(write_location, 'w') as csvfile:
-    csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    generator = Data_generator()
+def f_cam_write():
+    with open(CAM_WRITE_LOCATION, 'w') as csvfile:
+        csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        generator = Cam_data_generator()
 
-    row = generator.generate()
-    while (row != None):
-        csv_writer.writerow(row)
         row = generator.generate()
+        while (row != None):
+            csv_writer.writerow(row)
+            row = generator.generate()
+
+if __name__ == '__main__':
+    #optional output folder argument, folder needs to exist!
+    if (len(sys.argv) > 1):
+        CAM_WRITE_LOCATION = sys.argv[1] + '/f_cam_out.csv'
+    f_cam_write()
