@@ -32,7 +32,7 @@ if __name__ == '__main__':
     if (len(sys.argv) > 1):
         RESIM_WRITE_LOCATION = sys.argv[1] + '/resim_out.csv'
     if (len(sys.argv) == 4):
-        CAM_READ_LOCATION = sys.argv[2] + '/f_cam_out.csv'
-        SENSOR_READ_LOCATION = sys.argv[3] = '/sensor_out.csv'
+        CAM_READ_LOCATION = sys.argv[2]
+        SENSOR_READ_LOCATION = sys.argv[3]
 
     resim_process()

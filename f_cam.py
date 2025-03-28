@@ -4,6 +4,7 @@ import sys
 import csv
 import random
 
+START_TIME = 100.0
 START_FRAME = 100
 START_SPEED = 60.0
 START_YAW_RATE = 0.0
@@ -12,7 +13,6 @@ START_SIGNAL2 = 0
 
 FRAME_NUM = 2000 #defines length of file
 FULL_SPEED = 120.0
-SIGNAL1_TRIGGER = 200
 
 CAM_WRITE_LOCATION = './data/f_cam_out.csv' #default write location
 os.makedirs('./data', exist_ok=True)
@@ -20,7 +20,7 @@ os.makedirs('./data', exist_ok=True)
 
 class Cam_data_generator:
     def __init__(self):
-        self.timestamp = 100.0
+        self.timestamp = START_TIME
         self.frameId = START_FRAME
         self.speed = START_SPEED
         self.yawRate = START_YAW_RATE
