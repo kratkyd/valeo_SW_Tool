@@ -29,10 +29,11 @@ class Data_generator:
         else:
             return None
 
-with open('sensor_out.csv', 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+with open('sensor_out.csv', 'w') as csvfile:
+    csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     generator = Data_generator()
+
     row = generator.generate()
     while (row != None):
-        csvwriter.writerow(row)
+        csv_writer.writerow(row)
         row = generator.generate()

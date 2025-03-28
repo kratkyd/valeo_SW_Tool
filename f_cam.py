@@ -8,8 +8,8 @@ START_YAW_RATE = 0.0
 START_SIGNAL1 = 0
 START_SIGNAL2 = 0
 
+FRAME_NUM = 2000 #defines length of file
 FULL_SPEED = 120.0
-FRAME_NUM = 2000
 SIGNAL1_TRIGGER = 200
 
 class Data_generator:
@@ -26,7 +26,7 @@ class Data_generator:
 
     def generate(self):
         if (self.frameId < FRAME_NUM+START_FRAME):
-            ret = [self.frameId, self.timestamp, self.speed, self.yawRate, self.signal1, self.signal2]
+            ret = [self.timestamp, self.frameId, self.speed, self.yawRate, self.signal1, self.signal2]
             self.timestamp = round(self.timestamp + 0.0277 - 0.00005 + 0.0001*random.random(), 6)
             self.frameId += 1
             if (not self.fullSpeed):
@@ -44,10 +44,11 @@ class Data_generator:
         else:
             return None
 
-with open('f_cam_out.csv', 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+with open('f_cam_out.csv', 'w') as csvfile:
+    csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     generator = Data_generator()
+
     row = generator.generate()
     while (row != None):
-        csvwriter.writerow(row)
+        csv_writer.writerow(row)
         row = generator.generate()
