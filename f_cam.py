@@ -51,7 +51,7 @@ class Cam_data_generator:
             return None
 
 def f_cam_write():
-    with open(CAM_WRITE_LOCATION, 'w') as csvfile:
+    with open(CAM_WRITE_LOCATION, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         generator = Cam_data_generator()
 

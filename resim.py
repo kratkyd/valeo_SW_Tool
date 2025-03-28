@@ -10,7 +10,7 @@ RESIM_WRITE_LOCATION = './data/resim_out.csv'
 os.makedirs('./data', exist_ok=True)
 
 def resim_process():
-    with open(CAM_READ_LOCATION, 'r') as csv_cam, open(SENSOR_READ_LOCATION, 'r') as csv_sensor, open(RESIM_WRITE_LOCATION, 'w') as res_f:
+    with open(CAM_READ_LOCATION, 'r') as csv_cam, open(SENSOR_READ_LOCATION, 'r') as csv_sensor, open(RESIM_WRITE_LOCATION, 'w', newline='') as res_f:
         csv_cam_reader = csv.reader(csv_cam)
         csv_sensor_reader = csv.reader(csv_sensor)
         csv_writer = csv.writer(res_f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)

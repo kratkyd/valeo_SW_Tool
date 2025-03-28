@@ -36,7 +36,7 @@ class Data_generator:
             return None
 
 def sensor_write():
-    with open(SENSOR_WRITE_LOCATION , 'w') as csvfile:
+    with open(SENSOR_WRITE_LOCATION , 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         generator = Data_generator()
 
